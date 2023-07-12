@@ -1,0 +1,27 @@
+<h1>User Profile</h1>
+<p>ID:&nbsp;{{userId}}</p>
+<div class="example-container">
+    <mat-form-field class="login-form-field">
+        <mat-label>Change your name</mat-label>
+        <input matInput [formControl]="username" required>
+        <mat-error *ngIf="username.invalid">{{getUsernameErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="login-form-field">
+        <mat-label>Change your email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="login-form-field">
+        <mat-label>Change your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+</div>
+<br>
+<p>{{message}}</p>

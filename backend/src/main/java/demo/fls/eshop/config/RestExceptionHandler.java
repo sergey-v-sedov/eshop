@@ -10,6 +10,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.time.Instant;
@@ -55,5 +56,14 @@ public class RestExceptionHandler {
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("traceId", MDC.get("traceId"));
         return new ResponseEntity<>(problemDetail, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler({ResponseStatusException.class})
+    protected ResponseEntity<ProblemDetail> handleResponseStatusException(ResponseStatusException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(e.getStatusCode(), e.getMessage());
+        problemDetail.setDetail(e.getReason());
+        problemDetail.setProperty("timestamp", Instant.now());
+        problemDetail.setProperty("traceId", MDC.get("traceId"));
+        return new ResponseEntity<>(problemDetail, HttpStatus.valueOf(e.getStatusCode().value()));
     }
 }

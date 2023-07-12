@@ -14,7 +14,7 @@
     <button mat-icon-button class="example-icon" routerLink="/orders" *ngIf="authService.isAuth()">
       <mat-icon>credit_card</mat-icon>
     </button>
-    <button mat-icon-button class="example-icon" routerLink="/profile" *ngIf="authService.isAuth()">
+    <button mat-icon-button class="example-icon" routerLink="/profiles/my" *ngIf="authService.isAuth()">
       <mat-icon>account_circle</mat-icon>
     </button>
     <button mat-icon-button class="example-icon" (click)="logout()" *ngIf="authService.isAuth()">

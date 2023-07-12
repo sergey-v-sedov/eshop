@@ -24,6 +24,8 @@ import {AuthGuard} from "./login/auth-guard.service";
 import { RegistrationComponent } from './registration/registration.component';
 import {AuthHttpHeadersInterceptor} from "./login/auth-http-requests.interceptor";
 import {RegistrationService} from "./registration/registration.service";
+import { ProfileComponent } from './profile/profile.component';
+import {ProfileService} from "./profile/profile.service";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import {RegistrationService} from "./registration/registration.service";
     StorefrontComponent,
     OrdersComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import {RegistrationService} from "./registration/registration.service";
     provide: HTTP_INTERCEPTORS,
     useClass: AuthHttpHeadersInterceptor,
     multi: true,},
-    RegistrationService
+    RegistrationService,
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

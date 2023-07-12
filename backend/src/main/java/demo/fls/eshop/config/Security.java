@@ -99,7 +99,7 @@ public class Security {
             Optional<Profile> profile = profileRepository.findFirstByEmail(email);
             if(profile.isEmpty()) throw new UsernameNotFoundException("User " + email + " was not found");
 
-            return User.withUsername(profile.get().getUsername())
+            return User.withUsername(profile.get().getEmail())
                     .password(profile.get().getPassword())
                     .roles(Role.BUYER)
                     .build();
