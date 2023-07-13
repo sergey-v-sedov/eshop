@@ -22,8 +22,8 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     ResponseEntity<ProblemDetail> handleException(Exception e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        problemDetail.setTitle("Ошибка на сервере");
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.toString());
+        problemDetail.setTitle(e.getMessage());
         problemDetail.setType(URI.create("http://localhost:8080/api/v1/errors/internal_server_error"));
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("traceId", MDC.get("traceId"));
@@ -35,9 +35,8 @@ public class RestExceptionHandler {
         List<String> errors = e.getBindingResult().getFieldErrors()
                 .stream().map(FieldError::getDefaultMessage).toList();
 
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, Arrays.toString(errors.toArray()));
         problemDetail.setTitle(e.getMessage());
-        problemDetail.setDetail(Arrays.toString(errors.toArray()));
         problemDetail.setType(URI.create("http://localhost:8080/api/v1/errors/unprocessable_entity"));
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("traceId", MDC.get("traceId"));
@@ -49,9 +48,8 @@ public class RestExceptionHandler {
         List<String> errors = e.getConstraintViolations()
                 .stream().map(ConstraintViolation::getMessage).toList();
 
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, Arrays.toString(errors.toArray()));
         problemDetail.setTitle(e.getMessage());
-        problemDetail.setDetail(Arrays.toString(errors.toArray()));
         problemDetail.setType(URI.create("http://localhost:8080/api/v1/errors/unprocessable_entity"));
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("traceId", MDC.get("traceId"));
@@ -61,7 +59,7 @@ public class RestExceptionHandler {
     @ExceptionHandler({ResponseStatusException.class})
     protected ResponseEntity<ProblemDetail> handleResponseStatusException(ResponseStatusException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(e.getStatusCode(), e.getMessage());
-        problemDetail.setDetail(e.getReason());
+        problemDetail.setTitle(e.getReason());
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("traceId", MDC.get("traceId"));
         return new ResponseEntity<>(problemDetail, HttpStatus.valueOf(e.getStatusCode().value()));

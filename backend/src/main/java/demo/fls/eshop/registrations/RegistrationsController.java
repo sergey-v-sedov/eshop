@@ -1,11 +1,13 @@
 package demo.fls.eshop.registrations;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,7 +25,11 @@ public class RegistrationsController {
 
     @PostMapping
     public ResponseEntity post(@RequestBody Registration registration) throws URISyntaxException {
-        UUID userId = this.registrationsService.registration(registration);
-        return ResponseEntity.created(new URI("/profile/"+userId)).build();
+        try {
+            UUID userId = this.registrationsService.registration(registration);
+            return ResponseEntity.created(new URI("/profile/"+userId)).build();
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+        }
     }
 }

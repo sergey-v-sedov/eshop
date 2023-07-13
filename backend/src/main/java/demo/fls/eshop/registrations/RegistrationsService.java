@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -24,7 +25,8 @@ public class RegistrationsService {
     }
     public UUID registration(@Valid Registration registration) {
 
-        logger.info("MDC = " + MDC.get("traceId"));
+        Optional<Profile> existedProfile = profileRepository.findFirstByEmail(registration.email());
+        if(existedProfile.isPresent()) throw new IllegalArgumentException("Profile with provided email already exists");
 
         UUID userId = UUID.randomUUID();
 

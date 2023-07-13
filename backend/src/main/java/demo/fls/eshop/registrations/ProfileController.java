@@ -1,5 +1,6 @@
 package demo.fls.eshop.registrations;
 
+import demo.fls.eshop.auth.AuthUtil;
 import demo.fls.eshop.auth.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,11 +24,15 @@ public class ProfileController {
 
     @GetMapping("/my")
     public Profile get(Authentication authentication) {
-        return this.profileRepository.findFirstByEmail(authentication.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile not found"));
+        return this.profileRepository.findById(AuthUtil.getCurrentUserId(authentication)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile not found"));
     }
 
     @PutMapping("/my")
-    public void put(@RequestBody Profile profile) {
-        this.profileService.update(profile);
+    public void put(@RequestBody Profile profile, Authentication authentication) {
+        try {
+            this.profileService.update(profile, authentication);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+        }
     }
 }
