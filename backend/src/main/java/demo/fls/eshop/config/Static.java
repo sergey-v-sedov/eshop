@@ -8,7 +8,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import java.io.IOException;
 
-public class Static implements WebMvcConfigurer {
+public class Static {/*implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -23,5 +23,5 @@ public class Static implements WebMvcConfigurer {
                                 : new ClassPathResource("/static/index.html");
                     }
                 });
-    }
+    }*/
 }

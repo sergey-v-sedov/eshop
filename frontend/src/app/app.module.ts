@@ -26,6 +26,7 @@ import {AuthHttpHeadersInterceptor} from "./login/auth-http-requests.interceptor
 import {RegistrationService} from "./registration/registration.service";
 import { ProfileComponent } from './profile/profile.component';
 import {ProfileService} from "./profile/profile.service";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -36,24 +37,25 @@ import {ProfileService} from "./profile/profile.service";
     RegistrationComponent,
     ProfileComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatSidenavModule,
-    MatListModule,
-    MatMenuModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatListModule,
+        MatMenuModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        NgOptimizedImage
+    ],
   providers: [
     AuthService,
     AuthGuard, {

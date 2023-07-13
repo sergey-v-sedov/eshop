@@ -8,14 +8,19 @@ import {Product, StorefrontService} from "./storefront.service";
 })
 export class StorefrontComponent {
   products!: Product[];
-  value!: string;
+  query!: string;
 
   constructor(private storefrontService: StorefrontService) {}
 
   ngOnInit() {
-    this.storefrontService.findProducts().subscribe(data => {
+    this.query='';
+    this.search();
+  }
+
+  search() {
+    this.storefrontService.findProducts(this.query).subscribe(data => {
       console.log(data);
       this.products = data;
-    })
+    });
   }
 }

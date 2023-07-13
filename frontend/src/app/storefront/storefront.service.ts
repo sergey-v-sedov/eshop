@@ -3,8 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export class Product {
-  id!: String;
-  title!: String;
+  id!: string;
+  title!: string;
+  description!: string;
+  image!: string;
+  price!: number;
 }
 
 @Injectable({
@@ -15,7 +18,7 @@ export class StorefrontService {
 
   constructor(private httpClient: HttpClient) {}
 
-  findProducts(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + "/products");
+  findProducts(query: string): Observable<any> {
+    return this.httpClient.get(this.baseUrl + "/products?q="+query);
   }
 }

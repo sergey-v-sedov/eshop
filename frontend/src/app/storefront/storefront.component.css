@@ -1,23 +1,23 @@
 .search-form-field {
-  float:left;
+  float: left;
   width: 90%;
 }
 
 .search-form-button {
-  float:left;
+  float: left;
   margin-left: 10px;
 }
 
 .storefront {
-  float:left;
+  float: left;
 }
 
 .card {
-  max-width: 300px;
+  width: 300px;
   margin: 20px;
+  white-space: pre-wrap;
 }
 
 .example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }
