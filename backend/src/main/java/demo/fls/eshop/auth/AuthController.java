@@ -3,6 +3,7 @@ package demo.fls.eshop.auth;
 import demo.fls.eshop.registrations.Profile;
 import demo.fls.eshop.registrations.ProfileRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -19,7 +20,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(path = "/api/v1/auth", produces = MediaType.APPLICATION_JSON_VALUE, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
 public class AuthController {
     private final JwtEncoder encoder;
     private final ProfileRepository profileRepository;

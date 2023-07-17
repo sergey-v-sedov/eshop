@@ -10,7 +10,8 @@ import {ProfileComponent} from "./profile/profile.component";
 const routes: Routes = [
   {path:"login", component:LoginComponent},
   {path:"registration", component:RegistrationComponent},
-  {path:"profiles/my", component:ProfileComponent},
+  {path:"profiles/my", component:ProfileComponent, canActivate: [AuthGuard]},
+  {path:"cart", component:OrdersComponent, canActivate: [AuthGuard]},
   {path:"orders", component:OrdersComponent, canActivate: [AuthGuard]},
   {path:"**", component:StorefrontComponent}
 ];

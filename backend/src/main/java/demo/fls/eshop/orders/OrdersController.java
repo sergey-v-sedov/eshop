@@ -1,6 +1,7 @@
 package demo.fls.eshop.orders;
 
 import demo.fls.eshop.auth.Role;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/api/v1/orders")
+@RequestMapping(value = "/api/v1/orders", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 @PreAuthorize("hasRole('"+Role.BUYER+"')")
 public class OrdersController {
     @GetMapping

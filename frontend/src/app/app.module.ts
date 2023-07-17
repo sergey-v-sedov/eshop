@@ -27,6 +27,8 @@ import {RegistrationService} from "./registration/registration.service";
 import { ProfileComponent } from './profile/profile.component';
 import {ProfileService} from "./profile/profile.service";
 import {NgOptimizedImage} from "@angular/common";
+import { CartComponent } from './cart/cart.component';
+import {CartItemService} from "./cart/cart.service";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import {NgOptimizedImage} from "@angular/common";
     OrdersComponent,
     LoginComponent,
     RegistrationComponent,
-    ProfileComponent
+    ProfileComponent,
+    CartComponent
   ],
     imports: [
         BrowserModule,
@@ -63,7 +66,8 @@ import {NgOptimizedImage} from "@angular/common";
     useClass: AuthHttpHeadersInterceptor,
     multi: true,},
     RegistrationService,
-    ProfileService
+    ProfileService,
+    CartItemService
   ],
   bootstrap: [AppComponent]
 })
