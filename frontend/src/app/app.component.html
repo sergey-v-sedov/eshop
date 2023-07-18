@@ -5,7 +5,7 @@
     </button>
     <span>eShop</span>
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" routerLink="/cart">
+    <button mat-icon-button class="example-icon favorite-icon" routerLink="/cart" *ngIf="authService.isAuth()">
       <mat-icon>shopping_cart</mat-icon>
     </button>
     <button mat-icon-button class="example-icon" routerLink="/login" *ngIf="!authService.isAuth()">
