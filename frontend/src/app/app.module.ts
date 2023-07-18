@@ -30,6 +30,8 @@ import {NgOptimizedImage} from "@angular/common";
 import { CartComponent } from './cart/cart.component';
 import {CartItemService} from "./cart/cart.service";
 import {Error401Interceptor} from "./login/error401.interceptor";
+import {OrderService} from "./orders/order.service";
+import {CdkTableModule} from "@angular/cdk/table";
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import {Error401Interceptor} from "./login/error401.interceptor";
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        CdkTableModule
     ],
   providers: [
     AuthService,
@@ -71,7 +74,8 @@ import {Error401Interceptor} from "./login/error401.interceptor";
       multi: true,},
     RegistrationService,
     ProfileService,
-    CartItemService
+    CartItemService,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })

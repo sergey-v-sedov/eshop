@@ -1,0 +1,17 @@
+.storefront {
+    float: left;
+}
+
+.card {
+    width: 300px;
+    margin: 20px;
+    white-space: pre-wrap;
+}
+
+.order-form {
+    clear: both;
+}
+
+.login-form-field {
+    width: 500px;
+}

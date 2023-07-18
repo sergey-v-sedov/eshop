@@ -1,1 +1,27 @@
-app-orders
+<h1>Your orders</h1>
+<table cdk-table [dataSource]="dataSource">
+
+    <ng-container cdkColumnDef="productOrderItems">
+        <th cdk-header-cell *cdkHeaderCellDef> Order </th>
+        <td cdk-cell *cdkCellDef="let row">
+            <ul>
+                <li *ngFor="let item of row.productOrderItems">
+                    {{products.get(item.productId)?.title}} - {{products.get(item.productId)?.price}} EUR
+                </li>
+            </ul>
+        </td>
+    </ng-container>
+
+    <ng-container cdkColumnDef="creditCardNumber">
+        <th cdk-header-cell *cdkHeaderCellDef> Payment info </th>
+        <td cdk-cell *cdkCellDef="let row"> {{row.creditCardNumber}} </td>
+    </ng-container>
+
+    <ng-container cdkColumnDef="shippingAddress">
+        <th cdk-header-cell *cdkHeaderCellDef> Shipping Address </th>
+        <td cdk-cell *cdkCellDef="let row"> {{row.shippingAddress}} </td>
+    </ng-container>
+
+    <tr cdk-header-row *cdkHeaderRowDef="['productOrderItems', 'creditCardNumber', 'shippingAddress']"></tr>
+    <tr cdk-row *cdkRowDef="let row; columns: ['productOrderItems', 'creditCardNumber', 'shippingAddress']"></tr>
+</table>

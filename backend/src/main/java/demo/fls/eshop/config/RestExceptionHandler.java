@@ -2,6 +2,8 @@ package demo.fls.eshop.config;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.*;
@@ -20,8 +22,12 @@ import java.util.List;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
+    Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);
+
     @ExceptionHandler(Exception.class)
     ResponseEntity<ProblemDetail> handleException(Exception e) {
+        logger.warn("RestExceptionHandler handle Exception", e);
+
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.toString());
         problemDetail.setTitle(e.getMessage());
         problemDetail.setType(URI.create("http://localhost:8080/api/v1/errors/internal_server_error"));

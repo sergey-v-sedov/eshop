@@ -3,22 +3,26 @@ package demo.fls.eshop.orders;
 import demo.fls.eshop.auth.Role;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/v1/orders", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 @PreAuthorize("hasRole('"+Role.BUYER+"')")
 public class OrdersController {
+    private final OrdersService ordersService;
+    public OrdersController(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
     @GetMapping
-    public Collection<Order> get() {
-        Collection<Order> orders = Arrays.asList(new Order(UUID.randomUUID(), "Заказ 1"), new Order(UUID.randomUUID(), "Заказ 2"));
+    public Collection<ProductOrder> get(Authentication authentication) {
+        return ordersService.orders(authentication);
+    }
 
-        return orders;
+    @PutMapping
+    public ProductOrder put(@RequestBody ProductOrder newProductOrder, Authentication authentication) {
+        return ordersService.makeOrder(newProductOrder, authentication);
     }
 }

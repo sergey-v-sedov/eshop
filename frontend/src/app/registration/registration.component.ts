@@ -18,11 +18,11 @@ export class RegistrationComponent {
   constructor(private registrationService:RegistrationService, private router: Router) {}
 
   getUsernameErrorMessage() {
-    if (this.email.hasError('required')) {
+    if (this.username.hasError('required')) {
       return 'You must enter a value';
     }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.username.hasError('username') ? 'Not a valid username' : '';
   }
   getEmailErrorMessage() {
     if (this.email.hasError('required')) {

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -44,5 +43,10 @@ public class CartsService {
     private Cart getCartByCurrentBuyer(Authentication authentication) {
         UUID profileId = AuthUtil.getCurrentUserId(authentication);
         return cartRepository.findByProfileId(profileId).orElseGet(() -> cartRepository.save(new Cart(null, profileId)));
+    }
+
+    public void removeCurrentCart(Authentication authentication) {
+        UUID profileId = AuthUtil.getCurrentUserId(authentication);
+        cartRepository.findByProfileId(profileId).ifPresent(cartRepository::delete);
     }
 }
