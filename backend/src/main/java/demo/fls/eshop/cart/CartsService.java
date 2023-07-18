@@ -1,10 +1,8 @@
 package demo.fls.eshop.cart;
 
 import demo.fls.eshop.auth.AuthUtil;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.UUID;
