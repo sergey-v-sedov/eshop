@@ -21,11 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ApplicationTests extends IntegrationTestsInfrastructureInitializer{
 
-    private HttpHeaders headers;
+    private HttpHeaders headers = new HttpHeaders();
     private ResponseEntity<Collection<Product>> findAllResponse;
 
     @BeforeAll
     public void beforeAll() {
+        headers.add("Content-Type", "application/json");
+
         registerSuccess();
     }
 
@@ -54,7 +56,7 @@ class ApplicationTests extends IntegrationTestsInfrastructureInitializer{
     }
 
     void auth() {
-        String tokenResponse = testRestTemplate.withBasicAuth("user@user", "pass").postForObject("/api/v1/auth", null, String.class);
+        String tokenResponse = testRestTemplate.withBasicAuth("user@user", "pass").postForObject("/api/v1/auth", new HttpEntity<>(null, headers), String.class);
 
         JsonObject jsonResponse = new JsonParser().parse(tokenResponse).getAsJsonObject();
 
@@ -63,9 +65,7 @@ class ApplicationTests extends IntegrationTestsInfrastructureInitializer{
 
         String token = jsonResponse.get("jwt").getAsString();
 
-        headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);
-        headers.add("Content-Type", "application/json");
     }
 
     @Test
