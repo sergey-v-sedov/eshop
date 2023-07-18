@@ -11,6 +11,7 @@ export class AuthService {
 
   login(email:string, password:string ) {
     const headers = {
+      'Content-Type': 'application/json',
       'Authorization': 'Basic ' + btoa(email+':'+password),
       "X-Requested-With": "XMLHttpRequest"
     };

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -19,6 +19,6 @@ export class StorefrontService {
   constructor(private httpClient: HttpClient) {}
 
   findProducts(query: string): Observable<any> {
-    return this.httpClient.get(this.baseUrl + "/products?q="+query);
+    return this.httpClient.get(this.baseUrl + "/products?q="+query, { headers: new HttpHeaders({'Content-Type': 'application/json'})});
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Product, StorefrontService} from "./storefront.service";
 import {CartItemService} from "../cart/cart.service";
+import {AuthService} from "../login/auth.service";
 
 @Component({
   selector: 'app-storefront',
@@ -12,7 +13,7 @@ export class StorefrontComponent {
   productIdsInCart = new Set<string>();
   query!: string;
 
-  constructor(private storefrontService: StorefrontService, private cartItemService:CartItemService) {}
+  constructor(private storefrontService: StorefrontService, private cartItemService:CartItemService, private authService:AuthService) {}
 
   ngOnInit() {
     this.query='';
@@ -25,13 +26,15 @@ export class StorefrontComponent {
       this.products = data;
     });
 
-    this.cartItemService.getAll().subscribe(data => {
-      console.log(data);
+    if(this.authService.isAuth()) {
+      this.cartItemService.getAll().subscribe(data => {
+        console.log(data);
 
-      data.forEach((item) => {
-        this.productIdsInCart.add(item.productId);
+        data.forEach((item) => {
+          this.productIdsInCart.add(item.productId);
+        });
       });
-    });
+    }
   }
 
   add(productId: string) {

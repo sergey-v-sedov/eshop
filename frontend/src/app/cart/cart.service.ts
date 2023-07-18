@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {AuthService} from "../login/auth.service";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, share} from "rxjs";
 
 export class CartItem {
@@ -13,18 +12,18 @@ export class CartItem {
 export class CartItemService {
     public baseUrl = "http://localhost:8080/api/v1";
 
-    constructor(private httpClient: HttpClient, private authService:AuthService) {}
+    constructor(private httpClient: HttpClient) {}
 
     getAll(): Observable<CartItem[]> {
         // @ts-ignore
-        return this.httpClient.get(this.baseUrl + "/carts").pipe(share());
+        return this.httpClient.get(this.baseUrl + "/carts", { headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(share());
     }
 
     add(productId:string): Observable<any> {
-        return this.httpClient.put(this.baseUrl + "/carts/items/" + productId, null).pipe(share());
+        return this.httpClient.put(this.baseUrl + "/carts/items/" + productId, null, { headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(share());
     }
 
     remove(productId:string): Observable<any> {
-        return this.httpClient.delete(this.baseUrl + "/carts/items/" + productId).pipe(share());
+        return this.httpClient.delete(this.baseUrl + "/carts/items/" + productId, { headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(share());
     }
 }

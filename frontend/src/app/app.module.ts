@@ -29,6 +29,7 @@ import {ProfileService} from "./profile/profile.service";
 import {NgOptimizedImage} from "@angular/common";
 import { CartComponent } from './cart/cart.component';
 import {CartItemService} from "./cart/cart.service";
+import {Error401Interceptor} from "./login/error401.interceptor";
 
 @NgModule({
   declarations: [
@@ -61,14 +62,17 @@ import {CartItemService} from "./cart/cart.service";
     ],
   providers: [
     AuthService,
-    AuthGuard, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthHttpHeadersInterceptor,
-    multi: true,},
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpHeadersInterceptor,
+      multi: true,},
+    {provide: HTTP_INTERCEPTORS,
+      useClass: Error401Interceptor,
+      multi: true,},
     RegistrationService,
     ProfileService,
     CartItemService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
