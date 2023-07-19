@@ -14,7 +14,7 @@ export class Product {
   providedIn: 'root'
 })
 export class StorefrontService {
-  public baseUrl = "http://localhost:8080/api/v1";
+  public baseUrl = "/api/v1";
 
   constructor(private httpClient: HttpClient) {}
 

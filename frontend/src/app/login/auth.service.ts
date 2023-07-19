@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthService {
-  public baseUrl = "http://localhost:8080/api/v1";
+  public baseUrl = "/api/v1";
 
   constructor(private http: HttpClient) {}
 

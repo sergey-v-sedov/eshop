@@ -14,7 +14,7 @@ export class Profile {
     providedIn: 'root'
 })
 export class ProfileService {
-    public baseUrl = "http://localhost:8080/api/v1";
+    public baseUrl = "/api/v1";
 
     constructor(private httpClient: HttpClient) {}
 

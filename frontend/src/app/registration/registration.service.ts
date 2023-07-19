@@ -11,7 +11,7 @@ export class RegistrationProfile {
   providedIn: 'root'
 })
 export class RegistrationService {
-  public baseUrl = "http://localhost:8080/api/v1";
+  public baseUrl = "/api/v1";
 
   constructor(private httpClient: HttpClient, private authService:AuthService) {}
 

@@ -10,7 +10,7 @@ export class CartItem {
     providedIn: 'root'
 })
 export class CartItemService {
-    public baseUrl = "http://localhost:8080/api/v1";
+    public baseUrl = "/api/v1";
 
     constructor(private httpClient: HttpClient) {}
 

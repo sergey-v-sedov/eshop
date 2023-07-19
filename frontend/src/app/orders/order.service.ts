@@ -15,7 +15,7 @@ export class Order {
     providedIn: 'root'
 })
 export class OrderService {
-    public baseUrl = "http://localhost:8080/api/v1";
+    public baseUrl = "/api/v1";
 
     constructor(private httpClient: HttpClient, private authService: AuthService) {}
 

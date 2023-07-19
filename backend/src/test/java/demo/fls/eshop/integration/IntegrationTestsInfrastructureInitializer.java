@@ -29,11 +29,12 @@ public abstract class IntegrationTestsInfrastructureInitializer {
                     new PostgreSQLContainer<>("postgres:15.2-alpine").withInitScript("db.sql");
             POSTGRESQL_CONTAINER.start();
 
-            TestPropertyValues pgValues = TestPropertyValues.of(
-                    "spring.datasource.url = " + POSTGRESQL_CONTAINER.getJdbcUrl(),
-                    "spring.datasource.username = " + POSTGRESQL_CONTAINER.getUsername(),
-                    "spring.datasource.password = " + POSTGRESQL_CONTAINER.getPassword());
-            pgValues.applyTo(applicationContext);
+            TestPropertyValues values = TestPropertyValues.of(
+                    "spring.datasource.url=" + POSTGRESQL_CONTAINER.getJdbcUrl(),
+                    "spring.datasource.username=" + POSTGRESQL_CONTAINER.getUsername(),
+                    "spring.datasource.password=" + POSTGRESQL_CONTAINER.getPassword(),
+                    "server.ssl.enabled=false");
+            values.applyTo(applicationContext);
         }
     }
 }
