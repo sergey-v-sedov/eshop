@@ -28,7 +28,7 @@ public class OrdersService {
     }
 
     public ProductOrder makeOrder(@Valid ProductOrder newProductOrder, Authentication authentication) {
-        UUID profileId = AuthUtil.getCurrentUserId(authentication);
+        UUID profileId = newProductOrder.profileId(); // A01:2021 – Broken Access Control. Fix: newProductOrder = AuthUtil.getCurrentUserId(authentication);
         ProductOrder savedProductOrder = orderRepository.save(new ProductOrder(null, profileId, newProductOrder.productOrderItems(), newProductOrder.creditCardNumber(), newProductOrder.shippingAddress()));
         cartsService.removeCurrentCart(authentication);
         return savedProductOrder;

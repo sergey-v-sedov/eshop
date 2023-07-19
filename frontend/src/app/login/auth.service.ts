@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {share} from "rxjs";
+import jwt_decode from 'jwt-decode';
 
 
 @Injectable()
@@ -39,5 +40,12 @@ export class AuthService {
 
   getToken() : string | null {
     return localStorage.getItem('jwt');
+  }
+
+  getProfileId() : string {
+    const jwt = this.getToken();
+    const token = jwt_decode(jwt!);
+    // @ts-ignore
+    return token.jti;
   }
 }
