@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Product, StorefrontService} from "./storefront.service";
 import {CartItemService} from "../cart/cart.service";
 import {AuthService} from "../login/auth.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-storefront',
@@ -9,14 +10,20 @@ import {AuthService} from "../login/auth.service";
   styleUrls: ['./storefront.component.css']
 })
 export class StorefrontComponent {
-  products!: Product[];
+  products: Product[] = [];
   productIdsInCart = new Set<string>();
-  query!: string;
+  query: string = '';
 
-  constructor(private storefrontService: StorefrontService, private cartItemService:CartItemService, private authService:AuthService) {}
+  @ViewChild('searchQuery', {static: false}) searchQuery! : ElementRef;
+
+  constructor(private storefrontService: StorefrontService, private cartItemService:CartItemService, private authService:AuthService, private activatedRoute : ActivatedRoute) {}
 
   ngOnInit() {
-    this.query='';
+    let queryParams = this.activatedRoute.snapshot.queryParamMap;
+    this.query = queryParams.has('q') ? queryParams.get("q")! : '';
+  }
+
+  ngAfterViewInit() {
     this.search();
   }
 
@@ -35,6 +42,9 @@ export class StorefrontComponent {
         });
       });
     }
+
+    // A03:2021 – Injection. DOM XSS. Fix: don't work with DOM via native elements
+    if(this.query.length > 0) this.searchQuery.nativeElement.innerHTML = 'Your search request: ' + this.query;
   }
 
   add(productId: string) {

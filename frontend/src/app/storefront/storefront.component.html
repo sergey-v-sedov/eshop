@@ -4,10 +4,11 @@
     <mat-icon>close</mat-icon>
   </button>
 </mat-form-field>
-<button mat-fab color="primary" class="search-form-button" (click)="search()">
+<button mat-fab color="primary" class="search-form-button" (click)="search();">
   <mat-icon>search</mat-icon>
 </button>
-
+<div #searchQuery class="search-form-field"></div>
+<div class="search-form-field">{{products.length}} products was found</div>
 <div class="storefront" *ngFor="let product of products">
 <mat-card class="card">
   <mat-card-header>
