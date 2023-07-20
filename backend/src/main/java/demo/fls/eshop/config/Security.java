@@ -70,7 +70,7 @@ public class Security {
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exceptions) -> exceptions
-                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint()) // A07:2021 – Identification and Authentication Failures. JWT token isn't invalidated after logout.
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 ).build();
     }
