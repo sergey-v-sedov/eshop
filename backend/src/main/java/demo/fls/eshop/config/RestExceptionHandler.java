@@ -2,6 +2,7 @@ package demo.fls.eshop.config;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -28,7 +29,7 @@ public class RestExceptionHandler {
     ResponseEntity<ProblemDetail> handleException(Exception e) {
         logger.warn("RestExceptionHandler handle Exception", e);
 
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.toString());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ExceptionUtils.getStackTrace(e)); // A09:2021 – Security Logging and Monitoring Failures. Fix: Don't return stacktrace from the server to client.
         problemDetail.setTitle(e.getMessage());
         problemDetail.setType(URI.create("http://localhost:8080/api/v1/errors/internal_server_error"));
         problemDetail.setProperty("timestamp", Instant.now());
@@ -64,7 +65,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler({ResponseStatusException.class})
     protected ResponseEntity<ProblemDetail> handleResponseStatusException(ResponseStatusException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(e.getStatusCode(), e.getMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(e.getStatusCode(), ExceptionUtils.getStackTrace(e)); // A09:2021 – Security Logging and Monitoring Failures. Fix: Don't return stacktrace from the server to client.
         problemDetail.setTitle(e.getReason());
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("traceId", MDC.get("traceId"));
