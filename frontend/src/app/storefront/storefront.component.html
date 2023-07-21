@@ -14,7 +14,7 @@
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{product.title}}</mat-card-title>
-    <mat-card-subtitle>Price:&nbsp;{{product.price}}&nbsp;EUR</mat-card-subtitle>
+    <mat-card-subtitle>Price:&nbsp;{{product.price}}&nbsp;EUR, {{product.price/itlRate | number: '1.0-2'}}&nbsp;ITL</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image src="{{product.image}}" alt="Photo of {{product.title}}">
   <mat-card-content>

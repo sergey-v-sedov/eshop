@@ -21,4 +21,8 @@ export class StorefrontService {
   findProducts(query: string): Observable<any> {
     return this.httpClient.get(this.baseUrl + "/products?q="+query, { headers: new HttpHeaders({'Content-Type': 'application/json'})});
   }
+
+  getCurencyRate(code: string): Observable<any> {
+    return this.httpClient.get(this.baseUrl + "/currency-rates/"+code, { headers: new HttpHeaders({'Content-Type': 'application/json'})});
+  }
 }

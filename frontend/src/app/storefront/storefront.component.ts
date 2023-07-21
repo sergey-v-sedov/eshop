@@ -13,6 +13,7 @@ export class StorefrontComponent {
   products: Product[] = [];
   productIdsInCart = new Set<string>();
   query: string = '';
+  itlRate: number = 1;
 
   @ViewChild('searchQuery', {static: false}) searchQuery! : ElementRef;
 
@@ -21,6 +22,10 @@ export class StorefrontComponent {
   ngOnInit() {
     let queryParams = this.activatedRoute.snapshot.queryParamMap;
     this.query = queryParams.has('q') ? queryParams.get("q")! : '';
+    this.storefrontService.getCurencyRate('ITL').subscribe(data => {
+      this.itlRate = data.rates.ITL;
+      console.log('itlRate = ' + this.itlRate);
+    });
   }
 
   ngAfterViewInit() {
