@@ -61,7 +61,7 @@ public class Security {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/*", "/img/**", "/api/v1/products", "/api/v1/registrations").permitAll();
+                    authorize.requestMatchers("/*", "/img/**", "/api/v1/products","/api/v1/currency-rates/**", "/api/v1/registrations").permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .csrf((csrf) -> csrf.disable())

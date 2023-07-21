@@ -16,7 +16,8 @@ services:
       depends_on:
         - database
       ports:
-        - 8080:8080
+        - 80:80
+        - 443:443
       environment:
         - DATASOURCE_URL=jdbc:postgresql://database:5432/eshop
         - DATASOURCE_USER=postgres
