@@ -23,8 +23,8 @@ export class StorefrontComponent {
     let queryParams = this.activatedRoute.snapshot.queryParamMap;
     this.query = queryParams.has('q') ? queryParams.get("q")! : '';
     this.storefrontService.getCurencyRate('ITL').subscribe(data => {
-      this.itlRate = data.rates.ITL;
-      console.log('itlRate = ' + this.itlRate);
+      let responseStringToJson = eval(data); // A08:2021 – Software and Data Integrity Failures. Fix: this.itlRate = data.rates.ITL;
+      this.itlRate = responseStringToJson['rates']['ITL'];
     });
   }
 

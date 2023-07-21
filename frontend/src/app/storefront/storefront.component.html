@@ -16,7 +16,7 @@
     <mat-card-title>{{product.title}}</mat-card-title>
     <mat-card-subtitle>Price:&nbsp;{{product.price}}&nbsp;EUR, {{product.price/itlRate | number: '1.0-2'}}&nbsp;ITL</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="{{product.image}}" alt="Photo of {{product.title}}">
+  <img mat-card-image src="{{'http://localhost'+product.image}}" alt="Photo of {{product.title}}">
   <mat-card-content>
     &nbsp;
     <p>{{product.description}}</p>
