@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class Product {
   providedIn: 'root'
 })
 export class StorefrontService {
-  public baseUrl = "/api/v1";
+  public baseUrl = "http://localhost/api/v1";
 
   constructor(private httpClient: HttpClient) {}
 
@@ -23,6 +23,9 @@ export class StorefrontService {
   }
 
   getCurencyRate(code: string): Observable<string> {
-    return this.httpClient.get<string>(this.baseUrl + "/currency-rates/"+code, { headers: new HttpHeaders({'Content-Type': 'application/json'})});
+    let params = new HttpParams().append('provider', "https://v2.api.forex/rates/latest.json?key=demo&to="+code);
+    return this.httpClient.get<string>(this.baseUrl + "/currency-rates", {
+          headers: new HttpHeaders({'Content-Type': 'application/json'}),
+          params: params});
   }
 }

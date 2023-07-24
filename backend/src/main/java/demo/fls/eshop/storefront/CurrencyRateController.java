@@ -8,12 +8,10 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping(value = "/api/v1/currency-rates", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CurrencyRateController {
-    @GetMapping("/{code}")
-    public ResponseEntity<String> get(@PathVariable String code) {
+    @GetMapping()
+    public ResponseEntity<String> get(@RequestParam("provider") String ratesProviderUrl) {
         RestTemplate restTemplate = new RestTemplate();
-
-        String forexUrl = "https://v2.api.forex/rates/latest.json?key=demo&to="+code;
-        ResponseEntity<String> response = restTemplate.getForEntity(forexUrl, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(ratesProviderUrl, String.class);
 
         return response;
     }
