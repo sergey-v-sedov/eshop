@@ -31,13 +31,10 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthen
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Arrays;
 import java.util.Optional;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -60,12 +57,15 @@ public class Security {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests((authorize) -> {
+        return http
+                .addFilterBefore(corsFilter(), SessionManagementFilter.class)
+                .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/*", "/img/**", "/api/v1/products","/api/v1/currency-rates/**", "/api/v1/registrations").permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .csrf((csrf) -> csrf.disable())
-                .cors(withDefaults())
+                .cors((cors) -> cors.disable())
+                //.cors(withDefaults())
                 .httpBasic(withDefaults())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -76,16 +76,21 @@ public class Security {
     }
 
     @Bean
+    CorsAllAllowedFilter corsFilter() {
+        return new CorsAllAllowedFilter(); // CORS misconfiguration vulnerability. Fix: in corsConfigurationSource()
+    }
+
+    /*@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("https://localhost:443","http://localhost:80","http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedMethods(List.of("*"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
+    }*/
 
     @Bean
     public UserDetailsService users() {
