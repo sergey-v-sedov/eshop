@@ -24,7 +24,18 @@
         <module>frontend</module>
     </modules>
 
+
+
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.fortify.sca.plugins.maven</groupId>
+                    <artifactId>sca-maven-plugin</artifactId>
+                    <version>23.1.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
@@ -69,6 +80,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.fortify.sca.plugins.maven</groupId>
+                <artifactId>sca-maven-plugin</artifactId>
+                <version>23.1.0</version>
             </plugin>
         </plugins>
     </build>
